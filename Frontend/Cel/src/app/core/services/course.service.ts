@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CourseService {
+  [x: string]: any;
   private apiUrl = environment.apiUrl + '/courses';
 
   constructor(private http: HttpClient) {}
 
-  getCoures(): Observable<Course[]> {
+  getCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(this.apiUrl);
   }
 
