@@ -1,1 +1,23 @@
-<p>course-list works!</p>
+<div class="container">
+    <h2>Lista de Cursos</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Nivel</th>
+                <th>Descripción</th>
+                <th>Idioma</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of courses">
+                <td>{{ course.id }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.level }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.language }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

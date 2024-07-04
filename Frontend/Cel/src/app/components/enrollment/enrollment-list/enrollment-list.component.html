@@ -1,1 +1,27 @@
-<p>enrollment-list works!</p>
+<div class="container">
+  
+    <h2>Lista de Inscripciones</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ID del Curso</th>
+          <th>ID del Estudiante</th>
+          <th>Fecha de Inscripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enrollment of enrollments">
+          <td>{{ enrollment.id }}</td>
+          <td>{{ enrollment.courseId }}</td>
+          <td>{{ enrollment.studentId }}</td>
+          <td>{{ enrollment.enrollmentDate }}</td>
+          <td>
+            <button (click)="editEnrollment(enrollment)" class="btn btn-secondary">Editar</button>
+            <button (click)="deleteEnrollment(enrollment.id)" class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
