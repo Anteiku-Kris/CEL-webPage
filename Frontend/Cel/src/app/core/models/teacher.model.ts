@@ -1,6 +1,8 @@
-export interface Teacher {
-  id: number;
-  name: string;
-  email: string;
-  courses: string;
+export class Teacher {
+  constructor(
+    public id: number,
+    public name: string,
+    public email: string,
+    public courses: string,
+  ) {}
 }

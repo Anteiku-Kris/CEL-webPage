@@ -1,6 +1,8 @@
-export interface Enrollment {
-  id: number;
-  courseId: number;
-  studentId: number;
-  enrollmentDate: Date;
+export class Enrollment {
+  constructor(
+    public id: number,
+    public courseId: number,
+    public studentId: number,
+    public enrollmentDate: Date,
+  ){}
 }
