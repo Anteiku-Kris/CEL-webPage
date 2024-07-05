@@ -36,7 +36,7 @@ export class EnrollmentFormComponent {
 
   onSubmit() {
     if (this.isEditing) {
-      this.enrollmentService.updateEnrollment(this.enrollment.id, this.enrollment).subscribe(() => {
+      this.enrollmentService.updateEnrollment(this.enrollment).subscribe(() => {
         this.resetForm();
         this.loadEnrollments();
       });

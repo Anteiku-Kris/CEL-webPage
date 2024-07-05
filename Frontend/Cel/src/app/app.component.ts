@@ -6,7 +6,9 @@ import { TeacherService } from './core/services/teacher.service';
 import { EnrollmentService } from './core/services/enrollment.service';
 import { CourseService } from './core/services/course.service';
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CourseFormComponent } from './components/course/course-form/course-form.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +16,7 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     providers: [StudentService, TeacherService, EnrollmentService, CourseService],
-    imports: [RouterOutlet, HttpClientModule, NavbarComponent, FormsModule]
+    imports: [RouterOutlet, NavbarComponent, CourseFormComponent, CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule]
 })
 export class AppComponent {
   title = 'Cel';

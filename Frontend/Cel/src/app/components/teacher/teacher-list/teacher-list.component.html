@@ -1,22 +1,33 @@
 <div class="container">
-    <h2>Lista de Profesores</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Correo Electrónico</th>
-          <th>Cursos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let teacher of teachers">
-          <td>{{ teacher.id }}</td>
-          <td>{{ teacher.name }}</td>
-          <td>{{ teacher.email }}</td>
-          <td>{{ teacher.courses }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
   
+  <h2>Lista de profesores</h2>
+  <table class="table table-striped" *ngIf="listTeachers.length > 0; else noRecords">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Curso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let teacher of listTeachers; let i = index" class="table-success">
+        <td>
+          <span>{{teacher.id}}</span>
+        </td>
+        <td>
+          <span>{{teacher.name}}</span>
+        </td>
+        <td>
+          <span>{{teacher.email}}</span>
+        </td>
+        <td>
+          <span>{{teacher.courses}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noRecords>
+    <div>No hay registros</div>
+  </ng-template>
+</div>

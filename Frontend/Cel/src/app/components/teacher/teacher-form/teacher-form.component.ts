@@ -1,71 +1,61 @@
 import { Component } from '@angular/core';
 import { Teacher } from '../../../core/models/teacher.model';
 import { TeacherService } from '../../../core/services/teacher.service';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-teacher-form',
   standalone: true,
-  imports: [NgFor, FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule, CommonModule],
   templateUrl: './teacher-form.component.html',
   styleUrl: './teacher-form.component.css'
 })
 export class TeacherFormComponent {
-  teachers: Teacher[] = [];
-  teacher: Teacher = {
-    id: 0,
-    name: '',
-    email: '',
-    courses: '',
-  };
-  isEditing: boolean = false;
+  listTeachers: Teacher[] = [];
+  newTeacher: Teacher;
+  numEdit: number | null = null;
 
-  constructor(private teacherService: TeacherService) {}
-
+  constructor(private TeacherService: TeacherService) {
+    this.newTeacher = new Teacher(
+      0, '', '', '', 
+    );
+  }
   ngOnInit() {
-    this.loadTeachers();
+    this.getTeachers();
   }
 
-  loadTeachers() {
-    this.teacherService.getTeachers().subscribe((teachers: Teacher[]) => {
-      this.teachers = teachers;
+  getTeachers() {
+    this.TeacherService.getTeachers().subscribe((response: Teacher[]) => {
+      this.listTeachers = response;
     });
   }
 
-  onSubmit() {
-    if (this.isEditing) {
-      this.teacherService.updateTeacher(this.teacher.id, this.teacher).subscribe(() => {
-        this.resetForm();
-        this.loadTeachers();
-      });
-    } else {
-      this.teacherService.createTeacher(this.teacher).subscribe(() => {
-        this.resetForm();
-        this.loadTeachers();
+  createTeacher() {
+    this.TeacherService.createTeacher(this.newTeacher).subscribe(() => {
+      this.getTeachers();
+      this.newTeacher = new Teacher(0, '', '', '');
+    });
+  }
+
+  editTeacher(index: number) {
+    this.numEdit = index;
+  }
+
+  saveTeacher() {
+    if (this.numEdit !== null) {
+      this.TeacherService.updateTeacher(this.listTeachers[this.numEdit]).subscribe(() => {
+        this.numEdit = null;
+        this.getTeachers();
       });
     }
   }
 
-  editTeacher(teacher: Teacher) {
-    this.teacher = { ...teacher };
-    this.isEditing = true;
-  }
-
-  deleteTeacher(id: number) {
-    this.teacherService.deleteTeacher(id).subscribe(() => {
-      this.loadTeachers();
+  deleteCourse(index: number) {
+    const id = this.listTeachers[index].id;
+    this.TeacherService.deleteTeacher(id).subscribe(() => {
+      this.getTeachers();
     });
-  }
-
-  resetForm() {
-    this.teacher = {
-      id: 0,
-      name: '',
-      email: '',
-      courses: '',
-    };
-    this.isEditing = false;
   }
 }

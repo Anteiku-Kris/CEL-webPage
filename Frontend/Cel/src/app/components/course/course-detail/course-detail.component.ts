@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Course } from '../../../core/models/course.model';
@@ -8,32 +8,24 @@ import { CourseService } from '../../../core/services/course.service';
 @Component({
   selector: 'app-course-detail',
   standalone: true,
-  imports: [NgFor, FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule, CommonModule, NgIf],
   templateUrl: './course-detail.component.html',
   styleUrl: './course-detail.component.css'
 })
 export class CourseDetailComponent {
-  courses: Course[] = [];
-  course: Course = {
-    id: 0,
-    name: '',
-    level: '',
-    description: '',
-    language: ''
-  };
+  listCourses: Course[] = [];
+  newCourse: Course;
 
-  constructor(private courseService: CourseService) {}
-
+  constructor(private CourseService: CourseService) {
+    this.newCourse = new Course(0, '', '', '', '');
+  }
   ngOnInit() {
-    console.log('CoursesComponent initialized');
-    this.loadCourses();
+    this.getCourses();
   }
 
-  loadCourses() {
-    this.courseService.getCourses().subscribe((courses: Course[]) => {
-      this.courses = courses;
-      console.log('Courses loaded', courses);
+  getCourses() {
+    this.CourseService.getCourses().subscribe((response: Course[]) => {
+      this.listCourses = response;
     });
   }
-  
 }

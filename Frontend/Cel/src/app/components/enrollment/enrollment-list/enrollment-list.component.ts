@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,64 +8,54 @@ import { EnrollmentService } from '../../../core/services/enrollment.service';
 @Component({
   selector: 'app-enrollment-list',
   standalone: true,
-  imports: [NgFor, FormsModule, HttpClientModule],
+  imports: [NgFor, FormsModule, HttpClientModule, CommonModule],
   templateUrl: './enrollment-list.component.html',
   styleUrl: './enrollment-list.component.css'
 })
 export class EnrollmentListComponent {
-enrollments: Enrollment[] = [];
-  enrollment: Enrollment = {
-    id: 0,
-    courseId: 0,
-    studentId: 0,
-    enrollmentDate: new Date()
-  };
-  isEditing: boolean = false;
+  listEnrollments: Enrollment[] = [];
+  newEnrollment: Enrollment;
+  numEdit: number | null = null;
 
-  constructor(private enrollmentService: EnrollmentService) {}
-
+  constructor(private EnrollmentService: EnrollmentService) {
+    this.newEnrollment = new Enrollment(
+      0, 0, 0, new Date, 
+    );
+  }
   ngOnInit() {
-    this.loadEnrollments();
+    this.getEnrollments();
   }
 
-  loadEnrollments() {
-    this.enrollmentService.getEnrollments().subscribe((enrollments: Enrollment[]) => {
-      this.enrollments = enrollments;
+  getEnrollments() {
+    this.EnrollmentService.getEnrollments().subscribe((response: Enrollment[]) => {
+      this.listEnrollments = response;
     });
   }
 
-  onSubmit() {
-    if (this.isEditing) {
-      this.enrollmentService.updateEnrollment(this.enrollment.id, this.enrollment).subscribe(() => {
-        this.resetForm();
-        this.loadEnrollments();
-      });
-    } else {
-      this.enrollmentService.createEnrollment(this.enrollment).subscribe(() => {
-        this.resetForm();
-        this.loadEnrollments();
+  createEnrollment() {
+    this.EnrollmentService.createEnrollment(this.newEnrollment).subscribe(() => {
+      this.getEnrollments();
+      this.newEnrollment = new Enrollment(0, 0, 0, new Date);
+    });
+  }
+
+  editEnrollment(index: number) {
+    this.numEdit = index;
+  }
+
+  saveEnrollment() {
+    if (this.numEdit !== null) {
+      this.EnrollmentService.updateEnrollment(this.listEnrollments[this.numEdit]).subscribe(() => {
+        this.numEdit = null;
+        this.getEnrollments();
       });
     }
   }
 
-  editEnrollment(enrollment: Enrollment) {
-    this.enrollment = { ...enrollment };
-    this.isEditing = true;
-  }
-
-  deleteEnrollment(id: number) {
-    this.enrollmentService.deleteEnrollment(id).subscribe(() => {
-      this.loadEnrollments();
+  deleteEnrollment(index: number) {
+    const id = this.listEnrollments[index].id;
+    this.EnrollmentService.deleteEnrollment(id).subscribe(() => {
+      this.getEnrollments();
     });
-  }
-
-  resetForm() {
-    this.enrollment = {
-      id: 0,
-      courseId: 0,
-      studentId: 0,
-      enrollmentDate: new Date()
-    };
-    this.isEditing = false;
   }
 }

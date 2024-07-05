@@ -1,0 +1,22 @@
+.title {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0;
+  box-sizing: border-box;
+}
+
+button {
+  margin: 4px;
+}

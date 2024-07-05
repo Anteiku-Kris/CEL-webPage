@@ -1,45 +1,61 @@
 <div class="container">
-    <h2>Agregar Profesor</h2>
-    <form (ngSubmit)="onSubmit()" #teacherForm="ngForm">
-      <div class="form-group">
-        <label for="firstName">Nombre:</label>
-        <input type="text" id="firstName" class="form-control" [(ngModel)]="teacher.name" name="firstName" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" class="form-control" [(ngModel)]="teacher.email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="phone">Curso:</label>
-        <input type="text" id="phone" class="form-control" [(ngModel)]="teacher.courses" name="phone" required>
-      </div>
-      <button type="submit" class="btn btn-primary">{{ isEditing ? 'Guardar Cambios' : 'Agregar Profesor' }}</button>
-    </form>
-  
-    <h2>Lista de Profesores</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Correo Electrónico</th>
-          <th>Cursos</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let teacher of teachers">
-          <td>{{ teacher.id }}</td>
-          <td>{{ teacher.name }}</td>
-          <td>{{ teacher.email }}</td>
-          <td>{{ teacher.courses }}</td>
-          <td>
-            <button (click)="editTeacher(teacher)" class="btn btn-secondary">Editar</button>
-            <button (click)="deleteTeacher(teacher.id)" class="btn btn-danger">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+    <h2>Agregar profesor: </h2>
   </div>
+
+  <div class="form-group">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" [(ngModel)]="newTeacher.name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="level">Correo:</label>
+    <input type="text" id="level" [(ngModel)]="newTeacher.email" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="language">Curso:</label>
+    <input type="text" id="language" [(ngModel)]="newTeacher.courses" class="form-control">
+  </div>
+  <button type="submit" (click)="createTeacher()" class="btn btn-primary">Agregar curso</button>
   
+  <h2>Lista de profesores disponibles</h2>
+  <table class="table table-striped" *ngIf="listTeachers.length > 0; else noRecords">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Curso</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let teacher of listTeachers; let i = index" class="table-success">
+        <td>
+          <span *ngIf="numEdit !== i">{{teacher.id}}</span>
+          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listTeachers[i].id">
+        </td>
+        <td>
+          <span *ngIf="numEdit !== i">{{teacher.name}}</span>
+          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listTeachers[i].name">
+        </td>
+        <td>
+          <span *ngIf="numEdit !== i">{{teacher.email}}</span>
+          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listTeachers[i].email">
+        </td>
+        <td>
+          <span *ngIf="numEdit !== i">{{teacher.courses}}</span>
+          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listTeachers[i].courses">
+        </td>
+        
+        <td>
+          <button *ngIf="numEdit !== i" (click)="editTeacher(i)" class="btn btn-secondary btn-sm">Editar</button>
+          <button *ngIf="numEdit === i" (click)="saveTeacher()" class="btn btn-success btn-sm ms-2">Guardar</button>
+          <button (click)="deleteCourse(i)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noRecords>
+    <div>No hay registros</div>
+  </ng-template>
+</div>
