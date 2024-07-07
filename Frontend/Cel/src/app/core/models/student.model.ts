@@ -1,10 +1,10 @@
 export class Student {
   constructor(
     public id: number,
-    public firstName: string,
-    public lastName: string,
-    public email: string,
-    public phone: string,
+    public name: string,
     public age: number,
+    public email: string,
+    public password: string,
+    public history: string
   ) {}
 }

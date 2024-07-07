@@ -16,8 +16,12 @@
     <input type="text" id="language" [(ngModel)]="newCourse.language" class="form-control">
   </div>
   <div class="form-group">
-    <label for="">Status:</label>
-    <input type="text" id="status" [(ngModel)]="newCourse.status" class="form-control">
+    <label for="status">Estatus:</label>
+    <select id="status" [(ngModel)]="newCourse.status" class="form-control">
+      <option value="scheduled">Scheduled</option>
+      <option value="pending">Pending</option>
+      <option value="canceled">Canceled</option>
+    </select>
   </div>
   <button type="submit" (click)="createCourse()" class="btn btn-primary">Agregar curso</button>
   

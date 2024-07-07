@@ -11,18 +11,19 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, HttpClientModule, CommonModule, NgIf],
   templateUrl: './course-form.component.html',
-  styleUrl: './course-form.component.css'
+  styleUrls: ['./course-form.component.css']
 })
-export class CourseFormComponent implements OnInit{
+export class CourseFormComponent implements OnInit {
   listCourses: Course[] = [];
   newCourse: Course;
   numEdit: number | null = null;
 
   constructor(private CourseService: CourseService) {
     this.newCourse = new Course(
-      0, '', '', '', '',
+      0, '', '', '', 'pending', '[]'
     );
   }
+
   ngOnInit() {
     this.getCourses();
   }
@@ -36,7 +37,7 @@ export class CourseFormComponent implements OnInit{
   createCourse() {
     this.CourseService.createCourse(this.newCourse).subscribe(() => {
       this.getCourses();
-      this.newCourse = new Course(0, '', '', '', '');
+      this.newCourse = new Course(0, '', '', '', 'pending', '[]');
     });
   }
 
@@ -59,5 +60,4 @@ export class CourseFormComponent implements OnInit{
       this.getCourses();
     });
   }
-
 }

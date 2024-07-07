@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CourseService {
-  
+
   private apiUrl = environment.apiUrl + '/courses';
 
   constructor(private http: HttpClient) {}
@@ -32,4 +32,4 @@ export class CourseService {
   deleteCourse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-};
+}

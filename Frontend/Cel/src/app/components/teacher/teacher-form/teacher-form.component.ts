@@ -1,39 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Teacher } from '../../../core/models/teacher.model';
 import { TeacherService } from '../../../core/services/teacher.service';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CourseService } from '../../../core/services/course.service';
+import { Course } from '../../../core/models/course.model';
 
 @Component({
   selector: 'app-teacher-form',
   standalone: true,
   imports: [FormsModule, HttpClientModule, CommonModule],
   templateUrl: './teacher-form.component.html',
-  styleUrl: './teacher-form.component.css'
+  styleUrls: ['./teacher-form.component.css'],
 })
-export class TeacherFormComponent {
+export class TeacherFormComponent implements OnInit {
   listTeachers: Teacher[] = [];
   newTeacher: Teacher;
   numEdit: number | null = null;
+  coursesOptions: string[] = [];
 
-  constructor(private TeacherService: TeacherService) {
-    this.newTeacher = new Teacher(
-      0, '', '', '', 
-    );
+  constructor(
+    private teacherService: TeacherService,
+    private courseService: CourseService
+  ) {
+    this.newTeacher = new Teacher(0, '', '', '');
   }
+
   ngOnInit() {
     this.getTeachers();
+    this.getCourses(); // Llamar al método para obtener los cursos al iniciar el componente
   }
 
   getTeachers() {
-    this.TeacherService.getTeachers().subscribe((response: Teacher[]) => {
+    this.teacherService.getTeachers().subscribe((response: Teacher[]) => {
       this.listTeachers = response;
     });
   }
 
+  getCourses() {
+    this.courseService.getCourses().subscribe((courses: Course[]) => {
+      this.coursesOptions = courses.map((course) => course.name);
+    });
+  }
+
   createTeacher() {
-    this.TeacherService.createTeacher(this.newTeacher).subscribe(() => {
+    this.teacherService.createTeacher(this.newTeacher).subscribe(() => {
       this.getTeachers();
       this.newTeacher = new Teacher(0, '', '', '');
     });
@@ -45,16 +57,18 @@ export class TeacherFormComponent {
 
   saveTeacher() {
     if (this.numEdit !== null) {
-      this.TeacherService.updateTeacher(this.listTeachers[this.numEdit]).subscribe(() => {
+      this.teacherService.updateTeacher(
+        this.listTeachers[this.numEdit]
+      ).subscribe(() => {
         this.numEdit = null;
         this.getTeachers();
       });
     }
   }
 
-  deleteCourse(index: number) {
+  deleteTeacher(index: number) {
     const id = this.listTeachers[index].id;
-    this.TeacherService.deleteTeacher(id).subscribe(() => {
+    this.teacherService.deleteTeacher(id).subscribe(() => {
       this.getTeachers();
     });
   }

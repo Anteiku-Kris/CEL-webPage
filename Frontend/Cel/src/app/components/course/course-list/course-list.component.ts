@@ -17,7 +17,7 @@ export class CourseListComponent {
   newCourse: Course;
 
   constructor(private CourseService: CourseService) {
-    this.newCourse = new Course(0, '', '', '', '');
+    this.newCourse = new Course(0, '', '', '','pending', '[]');
   }
   ngOnInit() {
     this.getCourses();

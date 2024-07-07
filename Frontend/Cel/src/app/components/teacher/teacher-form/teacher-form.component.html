@@ -12,10 +12,13 @@
     <input type="text" id="level" [(ngModel)]="newTeacher.email" class="form-control">
   </div>
   <div class="form-group">
-    <label for="language">Curso:</label>
-    <input type="text" id="language" [(ngModel)]="newTeacher.courses" class="form-control">
+    <label for="courses">Curso:</label>
+    <select id="courses" [(ngModel)]="newTeacher.courses" class="form-control">
+      <option *ngFor="let course of coursesOptions" [value]="course">{{ course }}</option>
+    </select>
   </div>
-  <button type="submit" (click)="createTeacher()" class="btn btn-primary">Agregar curso</button>
+  
+  <button type="submit" (click)="createTeacher()" class="btn btn-primary">Agregar profesor</button>
   
   <h2>Lista de profesores disponibles</h2>
   <table class="table table-striped" *ngIf="listTeachers.length > 0; else noRecords">
@@ -50,12 +53,12 @@
         <td>
           <button *ngIf="numEdit !== i" (click)="editTeacher(i)" class="btn btn-secondary btn-sm">Editar</button>
           <button *ngIf="numEdit === i" (click)="saveTeacher()" class="btn btn-success btn-sm ms-2">Guardar</button>
-          <button (click)="deleteCourse(i)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+          <button (click)="deleteTeacher(i)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
         </td>
       </tr>
     </tbody>
   </table>
   <ng-template #noRecords>
-    <div>No hay registros</div>
+    <p>No hay profesores disponibles</p>
   </ng-template>
 </div>
