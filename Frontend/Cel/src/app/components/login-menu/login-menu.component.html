@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <h2 class="display-3 text-center">Inicio de sesión</h2>
+    <p class="lead text-center">¿Eres estudiante o administrador?</p>
+    <div class="center">
+        <a [routerLink]="['/student-login']">
+            <button type="button" class="btn btn-primary">Estudiante</button>
+        </a>
+        <a [routerLink]="['/admin-login']">
+            <button type="button" class="btn btn-primary">Administrador</button>
+        </a>
+    </div>
+    
+<hr>
+
+<h2 class="display-3 text-center">Regístrate</h2>
+<p class="lead text-center">¿Aún no te has registrado?, ¡házlo ahora!</p>
+    <div class="center">
+        <a [routerLink]="['/student-form']">
+            <button type="button" class="btn btn-primary">Estudiante</button>
+        </a>
+        <a [routerLink]="['/admin-register']">
+            <button type="button" class="btn btn-primary">Administrador</button>
+        </a>
+    </div>
+
+</div>
