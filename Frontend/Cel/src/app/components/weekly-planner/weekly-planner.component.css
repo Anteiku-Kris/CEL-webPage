@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid rgb(56, 56, 56);
+    padding: 20px;
+    text-align: center;
+}
+
+td {
+    vertical-align: middle;
+}
+
+select {
+    margin: 20px 10px;
+    border: 1px solid rgb(56, 56, 56);
+    background-color: rgb(252, 252, 252);
+}
+
+button {
+    margin: 10px 5px;
+    padding: 5px 5px;
+}
+
+.button {
+    display: flex;
+    justify-content: end;
+}
+hr {
+    height: 3px;
+    background-color: black;
+}
+

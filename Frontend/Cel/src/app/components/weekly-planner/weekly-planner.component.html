@@ -1,1 +1,35 @@
-<p>PENDIENTE: WEEKLY PLANER, CON LA OPCIÓN DE DESCARGAR PDF</p>
+<div class="container">
+    <div class="form-group">
+        <label for="course-select">Seleccionar curso:</label>
+        <select id="course-select" [(ngModel)]="selectedCourseId">
+            <option [ngValue]="null">Todos</option>
+            <option *ngFor="let course of courses" [ngValue]="course.id">{{ course.name }} ({{ course.level }} - {{ course.language }})</option>
+        </select>
+    </div>
+    
+    <div id="weekly-planner">
+    <h2>Horario</h2>
+    <table>
+        <thead>
+        <tr>
+            <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td *ngFor="let day of daysOfWeek">
+                <div *ngFor="let item of getCoursesForDay(day)">
+                    <p>{{ item.course.name }} ({{ item.course.level }} - {{ item.course.language }})</p>
+                    <p>{{ item.time }}</p>
+                    <hr>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="button">
+        <button class="btn btn-primary" (click)="downloadPDF()">Descargar PDF</button>
+    </div>
+      
+</div>
