@@ -20,10 +20,6 @@ export class StudentService {
     return this.http.get<Student>(`${this.apiUrl}/${id}`);
   }
 
-  createStudent(student: Student): Observable<Student> {
-    return this.http.post<Student>(this.apiUrl, student);
-  }
-
   updateStudent(id: number, student: Student): Observable<Student> {
     return this.http.put<Student>(`${this.apiUrl}/${id}`, student);
   }

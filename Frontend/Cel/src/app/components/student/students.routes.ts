@@ -9,5 +9,5 @@ export const STUDENT_ROUTES: Routes = [
     { path: 'student-detail', component: StudentDetailComponent },
     { path: 'student-form', component: StudentFormComponent },
     { path: 'student-list', component: StudentListComponent },
-    { path: 'student-login', component: StudentLoginComponent },
+    {path: 'student-login', component: StudentLoginComponent}
 ]

@@ -30,4 +30,9 @@ export class AuthService {
     localStorage.removeItem('user');
     this.isAuthenticatedSubject.next(false);
   }
+
+  getStudentId(): number {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user && user.id ? user.id : 0; // Ajusta esto según la estructura de tu usuario
+  }
 }

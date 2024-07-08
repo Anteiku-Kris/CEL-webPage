@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse col text-center" id="navbarColor01">
       <ul class="navbar-nav me-auto">
         <li class="nav-item" *ngIf="isAdmin">
-          <a class="nav-link" routerLink="/admin">Administración</a>
+          <a class="nav-link" routerLink="/admin-buttons">Administración</a>
         </li>
         <li class="nav-item" *ngIf="!isAuthenticated">
           <a class="nav-link" routerLink="/login-menu">Iniciar sesión</a>
@@ -16,7 +16,7 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/planner">Horarios</a>
         </li>
-        <li class="nav-item" *ngIf="!isAdmin">
+        <li class="nav-item" *ngIf="isAuthenticated && !isAdmin">
           <a class="nav-link" routerLink="/enrollment-form">Inscripción</a>
         </li>
         <li class="nav-item" *ngIf="isAuthenticated">

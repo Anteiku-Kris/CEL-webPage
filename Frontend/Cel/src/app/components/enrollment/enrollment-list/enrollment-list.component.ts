@@ -1,61 +1,51 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Añadir OnInit
 import { FormsModule } from '@angular/forms';
 import { Enrollment } from '../../../core/models/enrollment.model';
 import { EnrollmentService } from '../../../core/services/enrollment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-enrollment-list',
   standalone: true,
   imports: [NgFor, FormsModule, HttpClientModule, CommonModule],
   templateUrl: './enrollment-list.component.html',
-  styleUrl: './enrollment-list.component.css'
+  styleUrls: ['./enrollment-list.component.css'],
 })
-export class EnrollmentListComponent {
+export class EnrollmentListComponent implements OnInit {
   listEnrollments: Enrollment[] = [];
-  newEnrollment: Enrollment;
   numEdit: number | null = null;
 
-  constructor(private EnrollmentService: EnrollmentService) {
-    this.newEnrollment = new Enrollment(
-      0, 0, 0, new Date, 
-    );
-  }
+  constructor(
+    private enrollmentService: EnrollmentService,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     this.getEnrollments();
   }
 
   getEnrollments() {
-    this.EnrollmentService.getEnrollments().subscribe((response: Enrollment[]) => {
-      this.listEnrollments = response;
-    });
-  }
-
-  createEnrollment() {
-    this.EnrollmentService.createEnrollment(this.newEnrollment).subscribe(() => {
-      this.getEnrollments();
-      this.newEnrollment = new Enrollment(0, 0, 0, new Date);
-    });
-  }
-
-  editEnrollment(index: number) {
-    this.numEdit = index;
-  }
-
-  saveEnrollment() {
-    if (this.numEdit !== null) {
-      this.EnrollmentService.updateEnrollment(this.listEnrollments[this.numEdit]).subscribe(() => {
-        this.numEdit = null;
-        this.getEnrollments();
+    this.enrollmentService
+      .getEnrollments()
+      .subscribe((response: Enrollment[]) => {
+        this.listEnrollments = response;
       });
-    }
   }
 
-  deleteEnrollment(index: number) {
-    const id = this.listEnrollments[index].id;
-    this.EnrollmentService.deleteEnrollment(id).subscribe(() => {
+  approveEnrollment(enrollment: Enrollment) {
+    this.enrollmentService.approveEnrollment(enrollment.id).subscribe(() => {
       this.getEnrollments();
+      alert('Solicitud aprobada');
     });
   }
+
+  rejectEnrollment(enrollment: Enrollment) {
+    this.enrollmentService.rejectEnrollment(enrollment.id).subscribe(() => {
+      this.getEnrollments();
+      alert('Solicitud denegada');
+    });
+  }
+
 }

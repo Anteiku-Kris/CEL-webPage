@@ -10,13 +10,13 @@ import { environment } from '../../../environments/environment';
 export class EnrollmentService {
   private apiUrl = environment.apiUrl + '/enrollments';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getEnrollments(): Observable<Enrollment[]> {
     return this.http.get<Enrollment[]>(this.apiUrl);
   }
 
-  getEnrollmentById(id: number): Observable<Enrollment> {
+  getEnrollment(id: number): Observable<Enrollment> {
     return this.http.get<Enrollment>(`${this.apiUrl}/${id}`);
   }
 
@@ -24,11 +24,19 @@ export class EnrollmentService {
     return this.http.post<Enrollment>(this.apiUrl, enrollment);
   }
 
-  updateEnrollment(enrollment: Enrollment): Observable<Enrollment> {
-    return this.http.put<Enrollment>(`${this.apiUrl}/${enrollment.id}`, enrollment);
+  updateEnrollment(enrollment: Enrollment): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${enrollment.id}`, enrollment);
   }
 
   deleteEnrollment(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  approveEnrollment(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/approve`, {});
+  }
+
+  rejectEnrollment(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/reject`, {});
   }
 }

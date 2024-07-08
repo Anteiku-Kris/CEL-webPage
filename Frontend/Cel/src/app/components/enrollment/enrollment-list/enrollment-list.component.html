@@ -1,38 +1,24 @@
 <div class="container">
-  
   <h2>Lista de inscripciones</h2>
   <table class="table table-striped" *ngIf="listEnrollments.length > 0; else noRecords">
     <thead>
       <tr>
         <th>ID</th>
-        <th>ID del curso</th>
-        <th>ID del estudiante</th>
+        <th>Nombre del Curso</th>
+        <th>Nombre del Estudiante</th>
         <th>Fecha</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let enrollment of listEnrollments; let i = index" class="table-success">
+      <tr *ngFor="let enrollment of listEnrollments" class="table-success">
+        <td>{{enrollment.id}}</td>
+        <td>{{enrollment.courseName}}</td>
+        <td>{{enrollment.studentName}}</td>
+        <td>{{enrollment.enrollmentDate | date:'yyyy-MM-dd'}}</td>
         <td>
-          <span *ngIf="numEdit !== i">{{enrollment.id}}</span>
-          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listEnrollments[i].id">
-        </td>
-        <td>
-          <span *ngIf="numEdit !== i">{{enrollment.courseId}}</span>
-          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listEnrollments[i].courseId">
-        </td>
-        <td>
-          <span *ngIf="numEdit !== i">{{enrollment.studentId}}</span>
-          <input *ngIf="numEdit === i" type="text" [(ngModel)]="listEnrollments[i].studentId">
-        </td>
-        <td>
-          <span *ngIf="numEdit !== i">{{enrollment.enrollmentDate}}</span>
-          <input *ngIf="numEdit === i" type="date" [(ngModel)]="listEnrollments[i].enrollmentDate">
-        </td>
-        <td>
-          <button *ngIf="numEdit !== i" (click)="editEnrollment(i)" class="btn btn-secondary btn-sm">Editar</button>
-          <button *ngIf="numEdit === i" (click)="saveEnrollment()" class="btn btn-success btn-sm ms-2">Guardar</button>
-          <button (click)="deleteEnrollment(i)" class="btn btn-danger btn-sm ms-2">Eliminar</button>
+          <button (click)="approveEnrollment(enrollment)" class="btn btn-success btn-sm ms-2">Aprobar</button>
+          <button (click)="rejectEnrollment(enrollment)" class="btn btn-danger btn-sm ms-2">Denegar</button>
         </td>
       </tr>
     </tbody>
