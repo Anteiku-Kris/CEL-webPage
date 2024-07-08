@@ -7,15 +7,14 @@ const Student = {
   getById: (id, callback) => {
     connection.query("SELECT * FROM students WHERE id = ?", [id], callback);
   },
+  getByEmail: (email, callback) => { // Asegúrate de tener esta función
+    connection.query("SELECT * FROM students WHERE email = ?", [email], callback);
+  },
   create: (student, callback) => {
     connection.query("INSERT INTO students SET ?", student, callback);
   },
   update: (id, student, callback) => {
-    connection.query(
-      "UPDATE students SET ? WHERE id = ?",
-      [student, id],
-      callback
-    );
+    connection.query("UPDATE students SET ? WHERE id = ?", [student, id], callback);
   },
   delete: (id, callback) => {
     connection.query("DELETE FROM students WHERE id = ?", [id], callback);
@@ -23,3 +22,4 @@ const Student = {
 };
 
 module.exports = Student;
+

@@ -6,15 +6,19 @@ import { TeacherService } from './core/services/teacher.service';
 import { EnrollmentService } from './core/services/enrollment.service';
 import { CourseService } from './core/services/course.service';
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CourseFormComponent } from './components/course/course-form/course-form.component';
+import { CommonModule } from '@angular/common';
+import { AdminService } from './core/services/admin.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    providers: [StudentService, TeacherService, EnrollmentService, CourseService],
-    imports: [RouterOutlet, HttpClientModule, NavbarComponent, FormsModule]
+    providers: [StudentService, TeacherService, EnrollmentService, CourseService, AdminService, AuthService],
+    imports: [RouterOutlet, NavbarComponent, CourseFormComponent, CommonModule, ReactiveFormsModule, FormsModule, HttpClientModule]
 })
 export class AppComponent {
   title = 'Cel';

@@ -1,1 +1,51 @@
-<p>student-form works!</p>
+<div class="container">
+  <div>
+    <h2>Registro estudiante:</h2>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Nombre completo:</label>
+    <input
+      type="text"
+      id="name"
+      [(ngModel)]="newStudent.name"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="age">Edad:</label>
+    <input
+      type="text"
+      id="age"
+      [(ngModel)]="newStudent.age"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      id="email"
+      [(ngModel)]="newStudent.email"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      [(ngModel)]="newStudent.password"
+      class="form-control"
+    />
+  </div>
+
+  <div class="center">
+    <button type="submit" (click)="register()" class="btn btn-primary">
+      Registrarse
+    </button>
+  </div>
+</div>

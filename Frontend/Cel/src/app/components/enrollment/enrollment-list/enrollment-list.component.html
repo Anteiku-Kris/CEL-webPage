@@ -1,27 +1,29 @@
 <div class="container">
-  
-    <h2>Lista de Inscripciones</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>ID del Curso</th>
-          <th>ID del Estudiante</th>
-          <th>Fecha de Inscripción</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let enrollment of enrollments">
-          <td>{{ enrollment.id }}</td>
-          <td>{{ enrollment.courseId }}</td>
-          <td>{{ enrollment.studentId }}</td>
-          <td>{{ enrollment.enrollmentDate }}</td>
-          <td>
-            <button (click)="editEnrollment(enrollment)" class="btn btn-secondary">Editar</button>
-            <button (click)="deleteEnrollment(enrollment.id)" class="btn btn-danger">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h2>Lista de inscripciones</h2>
+  <table class="table table-striped" *ngIf="listEnrollments.length > 0; else noRecords">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre del Curso</th>
+        <th>Nombre del Estudiante</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let enrollment of listEnrollments" class="table-success">
+        <td>{{enrollment.id}}</td>
+        <td>{{enrollment.courseName}}</td>
+        <td>{{enrollment.studentName}}</td>
+        <td>{{enrollment.enrollmentDate | date:'yyyy-MM-dd'}}</td>
+        <td>
+          <button (click)="approveEnrollment(enrollment)" class="btn btn-success btn-sm ms-2">Aprobar</button>
+          <button (click)="rejectEnrollment(enrollment)" class="btn btn-danger btn-sm ms-2">Denegar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noRecords>
+    <div>No hay registros</div>
+  </ng-template>
+</div>

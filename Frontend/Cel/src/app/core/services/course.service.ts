@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CourseService {
-  [x: string]: any;
+
   private apiUrl = environment.apiUrl + '/courses';
 
   constructor(private http: HttpClient) {}
@@ -25,11 +25,11 @@ export class CourseService {
     return this.http.post<Course>(this.apiUrl, course);
   }
 
-  updateCourse(id: number, course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.apiUrl}/${id}`, course);
+  updateCourse(course: Course): Observable<Course> {
+    return this.http.put<Course>(`${this.apiUrl}/${course.id}`, course);
   }
 
   deleteCourse(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-};
+}

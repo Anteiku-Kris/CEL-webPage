@@ -1,23 +1,38 @@
 <div class="container">
-    <h2>Lista de Cursos</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Nivel</th>
-                <th>Descripción</th>
-                <th>Idioma</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let course of courses">
-                <td>{{ course.id }}</td>
-                <td>{{ course.name }}</td>
-                <td>{{ course.level }}</td>
-                <td>{{ course.description }}</td>
-                <td>{{ course.language }}</td>
-            </tr>
-        </tbody>
+  
+    <h2>Lista de cursos</h2>
+    <table class="table table-striped" *ngIf="listCourses.length > 0; else noRecords">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Nivel</th>
+          <th>Idioma</th>
+          <th>Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of listCourses; let i = index" class="table-success">
+          <td>
+            <span>{{course.id}}</span>
+          </td>
+          <td>
+            <span>{{course.name}}</span>
+          </td>
+          <td>
+            <span>{{course.level}}</span>
+          </td>
+          <td>
+            <span>{{course.language}}</span>
+          </td>
+          <td>
+            <span>{{course.status}}</span>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+    <ng-template #noRecords>
+      <div>No hay registros</div>
+    </ng-template>
+  </div>
+  

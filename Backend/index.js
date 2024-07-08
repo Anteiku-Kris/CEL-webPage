@@ -4,6 +4,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const enrollmentRoutes = require("./routes/enrollmentRoutes");
+const adminRoutes = require("./routes/adminRoutes")
 const conexion = require("./config/database");
 
 const app = express();
@@ -34,3 +35,4 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
+app.use("/api/admins", adminRoutes);

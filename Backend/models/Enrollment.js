@@ -4,16 +4,26 @@ const Enrollment = {
   getAll: (callback) => {
     connection.query("SELECT * FROM enrollments", callback);
   },
-  getById: (callback) => {
+  getById: (id, callback) => {
     connection.query("SELECT * FROM enrollments WHERE id = ?", [id], callback);
   },
   create: (enrollment, callback) => {
-    connection.query("INSERT INTO enrollments set ?", enrollment, callback);
+    const newEnrollment = {
+      course_id: enrollment.courseId,
+      student_id: enrollment.studentId,
+      enrollment_date: new Date(enrollment.enrollmentDate)
+    };
+    connection.query("INSERT INTO enrollments SET ?", newEnrollment, callback);
   },
   update: (id, enrollment, callback) => {
+    const updateEnrollment = {
+      course_id: enrollment.courseId,
+      student_id: enrollment.studentId,
+      enrollment_date: enrollment.enrollmentDate,
+    };
     connection.query(
       "UPDATE enrollments SET ? WHERE id = ?",
-      [enrollment, id],
+      [updateEnrollment, id],
       callback
     );
   },

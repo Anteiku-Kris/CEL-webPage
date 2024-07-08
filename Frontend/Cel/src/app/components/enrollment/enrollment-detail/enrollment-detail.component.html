@@ -1,1 +1,8 @@
-<p>enrollment-detail works!</p>
+<div *ngIf="enrollment">
+  <h2>Detalles de la Inscripción</h2>
+  <p><strong>ID:</strong> {{ enrollment.id }}</p>
+  <p><strong>Nombre del Curso:</strong> {{ enrollment.courseName }}</p>
+  <p><strong>Nombre del Estudiante:</strong> {{ enrollment.studentName }}</p>
+  <p><strong>Fecha:</strong> {{ enrollment.enrollmentDate | date }}</p>
+  <p><strong>Profesor:</strong> {{ enrollment.teacherName }}</p>
+</div>

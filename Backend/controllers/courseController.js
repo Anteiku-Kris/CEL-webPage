@@ -1,44 +1,68 @@
-const Course = require("../models/Course");
+const connection = require("../config/database");
+const Course = require('../models/Course')
 
-exports.getAllCourses = (req, res) => {
-  Course.getAll((error, courses) => {
-    if (error) return console.error(error.message);
-    res.json(courses);
+exports.getCourses = (req, res) => {
+  const query = "SELECT * FROM courses";
+  connection.query(query, (error, results) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    res.status(200).json(results);
   });
 };
 
 exports.getCourseById = (req, res) => {
-  const { id } = req.params;
-  Course.getById(id, (error, course) => {
-    if (error) return console.error(error.message);
-    if (course.length === 0) return console.log("Curso no encontrado");
-    res.json(Course[0]);
+  const courseId = req.params.id;
+  const query = "SELECT * FROM courses WHERE id = ?";
+  connection.query(query, [courseId], (error, results) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    res.status(200).json(results[0]);
   });
 };
 
-exports.createCourse = (req, res) => {
-  const newCourse = req.body;
-  Course.create(newCourse, (error, result) => {
-    if (error) return console.error(error.message);
-    res
-      .status(201)
-      .send(`The course was created with the ID: ${result.insertId}`);
-  });
+exports.createCourse = async (req, res) => {
+  const { name, level, language, status, schedule } = req.body;
+  try {
+    const newCourse = await Course.create({
+      name,
+      level,
+      language,
+      status,
+      schedule
+    });
+    res.status(201).json(newCourse);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
 
 exports.updateCourse = (req, res) => {
-  const { id } = req.params;
-  const updateCourse = req.body;
-  Course.update(id, updatedCourse, (error) => {
-    if (error) return console.error(error.message);
-    res.send("Course updated");
-  });
+  const courseId = req.params.id;
+  const { name, level, language, status, schedule } = req.body;
+  const query =
+    "UPDATE courses SET name = ?, level = ?, language = ?, status = ?, schedule = ? WHERE id = ?";
+  connection.query(
+    query,
+    [name, level, language, status, schedule, courseId],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({ error });
+      }
+      res.status(200).json({ id: courseId, name, level, language, status, schedule });
+    }
+  );
 };
 
 exports.deleteCourse = (req, res) => {
-  const { id } = req.params;
-  Course.delete(id, (error) => {
-    if (error) return console.error(error.message);
-    res.send("Course deleted");
+  const courseId = req.params.id;
+  const query = "DELETE FROM courses WHERE id = ?";
+  connection.query(query, [courseId], (error, results) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    res.status(204).json();
   });
 };
